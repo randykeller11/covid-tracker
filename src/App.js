@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { MenuItem, FormControl, Select, Menu } from "@material-ui/core";
+import InfoBox from "./InfoBox";
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState('worldwide');
+  const [country, setCountry] = useState("worldwide");
 
   useEffect(() => {
     const getCountriesData = async () => {
       await fetch("https://disease.sh/v3/covid-19/countries")
         .then((response) => response.json())
         .then((data) => {
-          const _countries = data.map((country) => (
-            {
+          const _countries = data.map((country) => ({
             name: country.country,
             value: country.countryInfo.iso2,
-          }
-          
-          ));
+          }));
           setCountries(_countries);
         });
     };
@@ -36,7 +34,7 @@ function App() {
         <h1>Covid-19 TRACKER</h1>
         <FormControl className="app__dropdown">
           <Select variant="outlined" value={country} onChange={onCountryChange}>
-            <MenuItem value='worldwide'>Worldwide</MenuItem>
+            <MenuItem value="worldwide">Worldwide</MenuItem>
             {/* loop through all the countries and show
              drop down list of options*/}
             {countries.map((country) => (
@@ -46,12 +44,14 @@ function App() {
         </FormControl>
       </div>
 
-      {/* Header */}
-      {/* Title and Select input dropdown field*/}
+      <div className="app__stats">
+        <InfoBox title="Coronavirus Cases" total={2000}  cases={216563}/>
 
-      {/* InfoBoxs*/}
-      {/* InfoBoxs*/}
-      {/* InfoBoxs*/}
+        <InfoBox title="Recovered" total={3000}  cases={22565}/>
+
+        <InfoBox title="Deaths" total={4000} cases={219653}/>
+
+      </div>
 
       {/*Table */}
       {/* Graph*/}
